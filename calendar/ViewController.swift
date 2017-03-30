@@ -112,14 +112,30 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
     
     @IBAction func gotoPreviousMonth(_ sender: AnyObject) {
-        calendarManager.offsetMonths(-1)
+       previousMonth()
+    }
+
+    @IBAction func gotoNextMonth(_ sender: AnyObject) {
+        nextMonth()
+    }
+    
+    @IBAction func didSwipe(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == UISwipeGestureRecognizerDirection.right{
+            previousMonth()
+        }else{
+            nextMonth()
+        }
+    }
+    
+    private func nextMonth(){
+        calendarManager.offsetMonths(1)
         self.monthLabel.text = calendarManager.currentMonthAndYear()
         dayOffset = (calendarManager.firstWeekDayOfMonth()-1) % 7
         collectionView.reloadData()
     }
-
-    @IBAction func gotoNextMonth(_ sender: AnyObject) {
-        calendarManager.offsetMonths(1)
+    
+    private func previousMonth(){
+        calendarManager.offsetMonths(-1)
         self.monthLabel.text = calendarManager.currentMonthAndYear()
         dayOffset = (calendarManager.firstWeekDayOfMonth()-1) % 7
         collectionView.reloadData()
